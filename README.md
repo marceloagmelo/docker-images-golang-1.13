@@ -2,7 +2,7 @@
 
 ### Download da imagem
 
-docker pull artifactory.santanderbr.corp/docker-base/golang-1.13.6:TAG_NAME
+docker pull golang-1.13.6:TAG_NAME
 
 ### Como usar a imagem
 
@@ -10,7 +10,7 @@ A imagem contém o script control.sh script, este script possui as seguintes op�
 
 #### Help
 
-docker run --rm -ti artifactory.santanderbr.corp/docker-base/golang-1.13:TAG_NAME help
+docker run --rm -ti golang-1.13:TAG_NAME help
 ```
 ========================================
 USAGE: /control.sh COMMAND [args]
@@ -25,30 +25,30 @@ USAGE: /control.sh COMMAND [args]
 
 #### Start
 
-O start por default executa o arquivo /application.jar
 ```
-docker run -d -p 0.0.0.0:8080:8080 artifactory.santanderbr.corp/docker-base/golang-1.13:TAG_NAME start
+docker run -d -p 0.0.0.0:8080:8080 golang-1.13:TAG_NAME start
 ```
 
 #### shell
 
 ```
-docker run --rm -ti artifactory.santanderbr.corp/docker-base/golang-1.13:TAG_NAME shell
+docker run --rm -ti golang-1.13:TAG_NAME shell
 ```
 
 ## Como criar uma imagem usando essa como FROM
 
-O exemplo abaixo cria uma aplicação usando artifactory.santanderbr.corp/docker-base/golang-1.13.6:TAG_NAME como base.
+O exemplo abaixo cria uma aplicação usando golang-1.13.6:TAG_NAME como base.
 
 Dockerfile
 
 ```
-FROM artifactory.santanderbr.corp/docker-base/golang-1.13:TAG_NAME
-ADD app /opt/app
+FROM golang-1.13:TAG_NAME
+ADD app /go/src/github.com/app
+RUN go mod init && go install
 ```
 
 ```
-docker build .
+docker build NOME-IMAGEM .
 ```
 
 ## Time Zone

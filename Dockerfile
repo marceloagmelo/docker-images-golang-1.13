@@ -1,6 +1,6 @@
 FROM centos:7
 
-MAINTAINER Marcelo Melo <marcelo.melo@santander.com.br>
+MAINTAINER Marcelo Melo <marceloagmelo@gmail.com>
 
 USER root
 
@@ -22,6 +22,13 @@ ADD scripts $IMAGE_SCRIPTS_HOME
 COPY Dockerfile $IMAGE_SCRIPTS_HOME/Dockerfile
 ADD app $APP_HOME
 
+ENV GOPATH /go
+ENV GOBIN /go/bin
+ENV PATH $GOBIN:/usr/local/go/bin:$PATH
+ENV GO111MODULE="on"
+
+RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
+
 RUN yum clean all && yum update -y && yum -y install \
     git \
     net-tools \
@@ -38,31 +45,13 @@ RUN yum clean all && yum update -y && yum -y install \
     go version && \
     chown -R golang:golang $APP_HOME && \
     chown -R golang:golang $IMAGE_SCRIPTS_HOME && \
+    chown -R golang:golang $GOPATH && \
     yum clean all && \
     rm -Rf /tmp/* && rm -Rf /var/tmp/*
 
-
-#######################################################################
-##### We have to expose image metada as label and ENV
-#######################################################################
-LABEL br.com.santander.imageowner="Corporate Techonology" \
-      br.com.santander.description="Golang 1.13.6 runtime for node microservices" \
-      br.com.santander.components="Golang Server"
-
-ENV br.com.santander.imageowner="Corporate Techonology"
-ENV br.com.santander.description="Golang 1.13.6 runtime for node microservices"
-ENV br.com.santander.components="Golang Server"
-
 EXPOSE 8080
 
-ENV GOPATH /go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-
-RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 777 "$GOPATH"
-
 USER golang
-
-ENV GO111MODULE="on"
 
 WORKDIR $IMAGE_SCRIPTS_HOME
 
