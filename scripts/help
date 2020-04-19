@@ -9,8 +9,6 @@ usage(){
   echo "    - start       : execute start scripts"
   echo "    - status      : execute status scripts"
   echo "    - test        : execute test scripts"
-  echo "    - threaddump  : Thread dump is created in system out"
-  echo "    - heapdump    : Heap dump file is created in /tmp/jvm.hprof"
   echo "========================================"
 }
 

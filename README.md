@@ -1,8 +1,8 @@
-# Docker Imagem Golang 1.13.6
+# Docker Imagem Golang 1.13.10
 
 ### Download da imagem
 
-docker pull golang-1.13.6:TAG_NAME
+docker pull marceloagmelo/golang-1.13:TAG_NAME
 
 ### Como usar a imagem
 
@@ -26,7 +26,7 @@ USAGE: /control.sh COMMAND [args]
 #### Start
 
 ```
-docker run -d -p 0.0.0.0:8080:8080 golang-1.13:TAG_NAME start
+docker run -d -p 0.0.0.0:8080:8080 marceloagmelo/golang-1.13:TAG_NAME start
 ```
 
 #### shell
@@ -37,7 +37,7 @@ docker run --rm -ti golang-1.13:TAG_NAME shell
 
 ## Como criar uma imagem usando essa como FROM
 
-O exemplo abaixo cria uma aplicação usando golang-1.13.6:TAG_NAME como base.
+O exemplo abaixo cria uma aplicação usando marceloagmelo/golang-1.13.6:TAG_NAME como base.
 
 Dockerfile
 
