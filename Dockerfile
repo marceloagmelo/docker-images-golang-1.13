@@ -12,12 +12,10 @@ ENV GOLANG_DIR_TMP /tmp
 ENV GOLANG_ARTIFACTORY_URL https://dl.google.com/go
 ENV GOLANG_SHA256 aae5be954bdc40bcf8006eb77e8d8a5dde412722bc8effcdaf9772620d06420c
 
-ENV APP_HOME /go/src/github.com/marceloagmelo/hello
 ENV IMAGE_SCRIPTS_HOME /opt/scripts
 
 ADD scripts $IMAGE_SCRIPTS_HOME
 COPY Dockerfile $IMAGE_SCRIPTS_HOME/Dockerfile
-ADD app $APP_HOME
 
 ENV GOPATH /go
 ENV GOBIN /go/bin
@@ -25,8 +23,6 @@ ENV PATH $GOBIN:/usr/local/go/bin:$PATH
 ENV GO111MODULE="on"
 
 RUN mkdir -p "$GOPATH/src" "$GOPATH/bin" && chmod -R 755 "$GOPATH/bin"
-
-WORKDIR $APP_HOME
 
 RUN yum clean all && yum update -y && yum -y install \
     git \
@@ -42,12 +38,10 @@ RUN yum clean all && yum update -y && yum -y install \
     groupadd --gid $GID golang && useradd --uid $UID -m -g golang golang && \
     export PATH="/usr/local/go/bin:$PATH" && \
     go version && \
-    chown -R golang:golang $APP_HOME && \
+    echo "running..." >> /opt/run.log && \
     chown -R golang:golang $IMAGE_SCRIPTS_HOME && \
     chown -R golang:golang $GOPATH && \
-    go mod init && \
-    go install && \
-    cp -r $APP_HOME/form $GOBIN && \
+    chown golang:golang /opt/run.log && \
     yum clean all && \
     rm -Rf /tmp/* && rm -Rf /var/tmp/*
 
